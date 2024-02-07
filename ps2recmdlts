@@ -1,0 +1,95 @@
+____________________________________________________________________________________________________________________
+#0Hah
+#!/bin/zsh
+# https://www.sharepointdiary.com/2021/04/manage-windows-registry-in-powershell.html
+< root <root
+#hope its still sthere https://www.finedininglovers.com/sites/g/files/xknfdk626/files/2019-12/beginners-guide-to-sushi_51c9e2be2747c_w587_1.png
+#How to Ecpertise Windows Sushi-coocing in the finest level of serving how to Manage Windows Registry in PowerShell as a menu^^?
+###A Registry File must always begin with an initialsation like the following "Windows Registry Editor Version 5.00"
+____________________________________________________________________________________________________________________
+#1. Creating a Registry Key Using PowerShell
+#To create a registry key using PowerShell, use the following command:
+New-Item -Path "Registry::HKEY_LOCAL_MACHINE\SOFTWARE\MyApplication"
+____________________________________________________________________________________________________________________	
+#2. Checking if a Registry Key Exists Using PowerShell
+#To check if a registry key exists using PowerShell, use the following command:
+	$Value = Get-ItemProperty -Path 'HKLM:\SOFTWARE\MyApp' -Name 'Version' -ErrorAction SilentlyContinue
+	 
+	If(Test-Path -Path "Registry::$Key") {
+	    Write-host -f Green "Key Exists!"
+	}
+	Else {
+	Write-host -f Yellow "Key doesn't Exists!"
+____________________________________________________________________________________________________________________
+#3. Creating a Registry Value Using PowerShell
+#To create a registry value using PowerShell, use the following command:
+	New-ItemProperty -Path "Registry::HKEY_LOCAL_MACHINE\SOFTWARE\MyApplication" -Name "Version" -Value "1.0"
+#Similarly, to create DWord or QWord values, use the “PropertyType” parameter.	
+	New-ItemProperty -Path "HKLM:\SOFTWARE\MyApp" -Name "Enabled" -Value "1" -PropertyType DWord
+____________________________________________________________________________________________________________________
+#4! Checking if a Registry Value Exists
+#To check if a registry value exists within a registry key using the Registry PSDrive, we can use the Get-#ItemProperty cmdlet. For example, to check if the Version value exists in the HKLM:\SOFTWARE\MyApp registry key, we #can run the following command:
+	$Value = Get-ItemProperty -Path 'HKLM:\SOFTWARE\MyApp' -Name 'Version' -ErrorAction SilentlyContinue
+	If ($value) {
+	    # Value exists
+	  Write-host -f Green $Value.Version
+	}
+	else {
+	    # Value does not exist
+	    Write-host -f Yellow "Value doesn't Exists!"
+	}
+____________________________________________________________________________________________________________________
+#5. Renaming a Registry Key Value Name in PowerShell
+
+You can use the Rename-ItemProperty cmdlet to rename an existing Registry value. For example, to rename the “Enabled” key value name to “IsEnabled” in the HKEY_LOCAL_MACHINE\SOFTWARE\MyApp Registry key, use the following command:
+	Rename-ItemProperty -Path "HKLM:\SOFTWARE\MyApp" -Name "Enabled" -NewName "IsEnabled"
+
+This command renames the “Enabled” key value to “IsEnabled” in the HKEY_LOCAL_MACHINE\SOFTWARE\MyApp Registry key.
+
+____________________________________________________________________________________________________________________
+#6. Updating the Value of a Registry Key Using PowerShell
+
+Modifying the value of a registry key is a common task in Windows Registry management. PowerShell provides the Set-ItemProperty cmdlet to change the value of a specific registry key. By specifying the path of the key, the name of the value, and the new value data, PowerShell will update the value accordingly.
+
+To change the value of a registry key using PowerShell, use the following command:
+
+	Set-ItemProperty -Path "Registry::HKEY_LOCAL_MACHINE\SOFTWARE\MyApplication" -Name "Version" -Value "2.0"
+
+____________________________________________________________________________________________________________________
+#7. Query a Registry Key Using PowerShell
+Retrieving the value of a registry key is often necessary for troubleshooting or verification purposes. PowerShell offers the Get-ItemProperty cmdlet to retrieve the value of a specific registry key. You can also specify the path of the key and the name of the value, PowerShell will return the corresponding value data.
+To get the value of a registry key using PowerShell, use the following command:
+	Get-ItemProperty -Path "Registry::HKEY_LOCAL_MACHINE\SOFTWARE\MyApp"
+Similarly, to get all subkeys of a specific registry key, use:
+	Get-ChildItem -Path "HKLM:\SOFTWARE\MyApp" -Recurse | Select PSPath, PSChildName
+This command retrieves a list of subkeys in the specified Registry key.
+____________________________________________________________________________________________________________________
+#8, Manipulating Keys and Evereything:
+Get Registry Key Value Using PowerShell
+Querying a registry key allows you to check if a specific value exists within the key. PowerShell provides the Get-ItemPropertyValue cmdlet to query a registry key and retrieve the value of a specific value name. By specifying the path of the key and the name of the value, PowerShell will return the corresponding value data if it exists.
+____________________________________________________________________________________________________________________
+#9. To query a registry key using PowerShell, use the following command:
+	Get-ItemPropertyValue -Path "Registry::HKEY_LOCAL_MACHINE\SOFTWARE\MyApplication" -Name "Version"
+____________________________________________________________________________________________________________________
+#10. Deleting a Registry Value Using PowerShell
+
+In addition to deleting keys, PowerShell also provides the ability to delete specific registry values. The Remove-ItemProperty cmdlet is used to remove a specific registry value by specifying the path of the key and the name of the value. PowerShell will then delete the value from the registry.
+____________________________________________________________________________________________________________________
+#11. To delete a registry value using PowerShell, use the following command:
+	Remove-Item -Path "Registry::HKEY_LOCAL_MACHINE\SOFTWARE\MyApplication" -Recurse
+____________________________________________________________________________________________________________________
+#12. Deleting a Registry Key Using PowerShell
+Removing unnecessary or obsolete registry keys is essential for maintaining a clean and optimized system. PowerShell provides the Remove-Item cmdlet to delete a specific registry key. By specifying the path of the key, PowerShell will remove the key and all its subkeys and values.
+_______________________________________________________________________________________
+#13. To delete a registry key using PowerShell, use the following command:
+	if (Test-Path -Path "Registry::HKEY_LOCAL_MACHINE\SOFTWARE\MyApplication") {
+	if (Test-Path -Path "Registry::HKEY_LOCAL_MACHINE\SOFTWARE\MyApplication") {
+	\
+	else { 
+	    Write-host "The Specified Registry Key doesn't exists!"
+____________________________________________________________________________________________________________________
+#14. And now the IMPORTATANT of ALL
+Exporting a Registry Key Using PowerShell
+Exporting registry keys is a useful technique for backup purposes or transferring settings between systems. However, PowerShell does not have a native cmdlet to export registry keys directly to a .reg file. The standard method to export a registry key to a .reg file is using regedit.exe through the user interface.
+We have the Reg Export built-in command to export and import the specific keys and values to a file, which can then be stored in a secure location for future use.
+To export a registry key using PowerShell, use the following command:
